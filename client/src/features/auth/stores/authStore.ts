@@ -69,7 +69,6 @@ export const useAuth = create<AuthState>()(
         user: state.user,
         accessToken: state.accessToken,
         isAuthenticated: state.isAuthenticated,
-        // Note: isAuthVerified is NOT persisted — always starts as false on reload
       }),
     }
   )
