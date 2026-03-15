@@ -67,3 +67,12 @@ export interface ApiLesson {
   orderIndex: number;
   chapter?: ApiChapter;
 }
+
+export interface ApiUserLessonProgress {
+  idProgress: string;
+  status: string;
+  completedAt?: string;
+  lesson?: {
+    idLesson: string;
+  };
+}

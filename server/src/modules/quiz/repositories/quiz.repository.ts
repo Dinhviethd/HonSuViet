@@ -92,6 +92,19 @@ export class QuizRepository {
     const result = await this.repository.delete(idQuiz);
     return (result.affected ?? 0) > 0;
   }
+
+  async countAll(): Promise<number> {
+    return this.repository.count();
+  }
+
+  async findAllWithQuestionCount(): Promise<Array<Quiz & { questionCount: number }>> {
+    const quizzes = await this.findAll();
+    const counts = await AppDataSource.query<Array<{ idQuiz: string; questionCount: number }>>(
+      `SELECT "idQuiz", COUNT("idQuestion")::int AS "questionCount" FROM questions GROUP BY "idQuiz"`,
+    );
+    const countMap = new Map(counts.map(r => [r.idQuiz, r.questionCount]));
+    return quizzes.map(q => Object.assign(q, { questionCount: countMap.get(q.idQuiz) ?? 0 }));
+  }
 }
 
 export const quizRepository = new QuizRepository();

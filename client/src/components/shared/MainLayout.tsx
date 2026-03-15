@@ -1,15 +1,17 @@
 import { Suspense } from "react";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
-import { BookOpen, Trophy, MessageSquare, BookMarked, Library, Gamepad2, FileText, GraduationCap, Search, User, LogIn } from "lucide-react";
+import { BookOpen, Trophy, MessageSquare, BookMarked, Library, Gamepad2, FileText, GraduationCap, Search, User, LogIn, ChevronDown, Settings, KeyRound, LogOut } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { FloatingDragon } from "@/features/hon-su-viet/components/DragonPattern";
 import { PageLoadingFallback } from "@/components/shared/LoadingFallback";
 import { useState } from "react";
 import { useAuth } from "@/features/auth/stores/authStore";
 import { authService } from "@/features/auth/services/authService";
+import { toast } from "sonner";
 
 const navigation = [
   { name: "Trang chủ", href: "/", icon: BookOpen },
@@ -26,11 +28,25 @@ export default function HonSuVietLayout() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const openLoginModal = () => {
     navigate("/auth/login", {
       state: { backgroundLocation: { ...location, authModal: "login" } },
     });
+  };
+
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true);
+      await authService.logout();
+      toast.success("Đăng xuất thành công");
+      navigate("/");
+    } catch {
+      toast.error("Không thể đăng xuất. Vui lòng thử lại.");
+    } finally {
+      setIsLoggingOut(false);
+    }
   };
 
   const { user, isAuthenticated } = useAuth();
@@ -131,13 +147,59 @@ export default function HonSuVietLayout() {
               </Badge>
 
               {isAuthenticated ? (
-                <Button
-                  onClick={() => { authService.logout(); }}
-                  className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-red-900 hover:from-yellow-500 hover:to-yellow-600 font-bold shadow-lg border-2 border-yellow-600"
-                >
-                  <User className="w-4 h-4 mr-2" />
-                  {user?.name}
-                </Button>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button
+                      type="button"
+                      className="flex items-center gap-3 rounded-full px-2 py-1 hover:bg-white/10 transition-colors"
+                    >
+                      {user?.avatarUrl ? (
+                        <img
+                          src={user.avatarUrl}
+                          alt="Avatar"
+                          className="w-11 h-11 rounded-full object-cover ring-2 ring-yellow-300"
+                        />
+                      ) : (
+                        <div className="w-11 h-11 rounded-full bg-gradient-to-br from-yellow-300 to-amber-500 text-red-900 font-black flex items-center justify-center ring-2 ring-yellow-300">
+                          {user?.name?.charAt(0).toUpperCase() || "U"}
+                        </div>
+                      )}
+                      <span className="font-bold text-yellow-100 max-w-[140px] truncate">{user?.name}</span>
+                      <ChevronDown className="w-4 h-4 text-yellow-200" />
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent align="end" className="w-64 p-2 border-2 border-yellow-500 bg-amber-50">
+                    <div className="px-3 py-2 border-b border-amber-200 mb-2">
+                      <p className="font-bold text-red-900">{user?.name}</p>
+                      <p className="text-sm text-amber-900/80">{user?.email}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => navigate('/profile')}
+                      className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-left text-red-900 hover:bg-yellow-100 transition-colors"
+                    >
+                      <Settings className="w-4 h-4" />
+                      Đổi thông tin cá nhân
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => navigate('/profile/change-password')}
+                      className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-left text-red-900 hover:bg-yellow-100 transition-colors"
+                    >
+                      <KeyRound className="w-4 h-4" />
+                      Đổi mật khẩu
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => void handleLogout()}
+                      disabled={isLoggingOut}
+                      className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-left text-red-700 hover:bg-red-100 transition-colors disabled:opacity-60"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      {isLoggingOut ? 'Đang đăng xuất...' : 'Đăng xuất'}
+                    </button>
+                  </PopoverContent>
+                </Popover>
               ) : (
                 <Button
                   onClick={openLoginModal}
@@ -154,9 +216,55 @@ export default function HonSuVietLayout() {
               <Button size="sm" variant="ghost" className="text-white" onClick={() => setIsSearchOpen(true)}>
                 <Search className="w-5 h-5" />
               </Button>
-              <Button size="sm" className="bg-yellow-500 text-red-900" onClick={openLoginModal}>
-                <User className="w-4 h-4" />
-              </Button>
+              {isAuthenticated ? (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button
+                      type="button"
+                      className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-yellow-300"
+                    >
+                      {user?.avatarUrl ? (
+                        <img src={user.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-yellow-300 to-amber-500 text-red-900 font-black flex items-center justify-center">
+                          {user?.name?.charAt(0).toUpperCase() || "U"}
+                        </div>
+                      )}
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent align="end" className="w-60 p-2 border-2 border-yellow-500 bg-amber-50">
+                    <button
+                      type="button"
+                      onClick={() => navigate('/profile')}
+                      className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-left text-red-900 hover:bg-yellow-100 transition-colors"
+                    >
+                      <Settings className="w-4 h-4" />
+                      Đổi thông tin cá nhân
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => navigate('/profile/change-password')}
+                      className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-left text-red-900 hover:bg-yellow-100 transition-colors"
+                    >
+                      <KeyRound className="w-4 h-4" />
+                      Đổi mật khẩu
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => void handleLogout()}
+                      disabled={isLoggingOut}
+                      className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-left text-red-700 hover:bg-red-100 transition-colors disabled:opacity-60"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      {isLoggingOut ? 'Đang đăng xuất...' : 'Đăng xuất'}
+                    </button>
+                  </PopoverContent>
+                </Popover>
+              ) : (
+                <Button size="sm" className="bg-yellow-500 text-red-900" onClick={openLoginModal}>
+                  <User className="w-4 h-4" />
+                </Button>
+              )}
             </div>
           </div>
 

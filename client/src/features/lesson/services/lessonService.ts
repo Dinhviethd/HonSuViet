@@ -1,7 +1,9 @@
 import api from "@/lib/api";
+import axios from "axios";
 import type {
   ApiChapter,
   ApiLesson,
+  ApiUserLessonProgress,
   ApiResponse,
   Lesson,
   LessonDetail,
@@ -30,13 +32,13 @@ function normalizeLessonTitle(title: string): string {
   return title.replace(/^Bài\s*\d+\s*:\s*/i, "").trim();
 }
 
-function mapLessonToCard(lesson: ApiLesson): Lesson {
+function mapLessonToCard(lesson: ApiLesson, completedLessonIds: Set<string>): Lesson {
   return {
     id: lesson.idLesson,
     orderIndex: lesson.orderIndex ?? 0,
     title: normalizeLessonTitle(lesson.title),
     duration: formatDuration(lesson.durationMinutes),
-    completed: false,
+    completed: completedLessonIds.has(lesson.idLesson),
     locked: false,
   };
 }
@@ -93,14 +95,30 @@ function extractLessonContent(contentBody: ApiLesson["contentBody"]) {
 }
 
 export const lessonService = {
-  async getLessonPeriods(): Promise<LessonPeriod[]> {
-    const [chapterResponse, lessonResponse] = await Promise.all([
+  async getLessonPeriods(idUser?: string): Promise<LessonPeriod[]> {
+    const progressRequest: Promise<{ data: ApiResponse<ApiUserLessonProgress[]> }> = idUser
+      ? api.get<ApiResponse<ApiUserLessonProgress[]>>(`/lesson/progress/user/${idUser}`)
+      : Promise.resolve({
+          data: {
+            success: true,
+            data: [],
+          },
+        });
+
+    const [chapterResponse, lessonResponse, progressResponse] = await Promise.all([
       api.get<ApiResponse<ApiChapter[]>>("/lesson/chapters"),
       api.get<ApiResponse<ApiLesson[]>>("/lesson/lessons"),
+      progressRequest,
     ]);
 
     const chapters = chapterResponse.data.data ?? [];
     const lessons = lessonResponse.data.data ?? [];
+    const progresses = progressResponse.data.data ?? [];
+    const completedLessonIds = new Set<string>(
+      progresses
+        .filter((progress) => progress.status === "completed" && progress.lesson?.idLesson)
+        .map((progress) => progress.lesson!.idLesson),
+    );
 
     const lessonsByChapter = lessons.reduce<Record<string, Lesson[]>>((acc, lesson) => {
       const chapterId = lesson.chapter?.idChapter;
@@ -112,7 +130,7 @@ export const lessonService = {
         acc[chapterId] = [];
       }
 
-      acc[chapterId].push(mapLessonToCard(lesson));
+      acc[chapterId].push(mapLessonToCard(lesson, completedLessonIds));
       return acc;
     }, {});
 
@@ -150,5 +168,35 @@ export const lessonService = {
       duration: formatDuration(lesson.durationMinutes),
       content: extractLessonContent(lesson.contentBody),
     };
+  },
+
+  async markLessonCompleted(idUser: string, idLesson: string): Promise<void> {
+    try {
+      const existingResponse = await api.get<ApiResponse<{ idProgress: string }>>(
+        `/lesson/progress/user/${idUser}/lesson/${idLesson}`,
+      );
+
+      const progressId = existingResponse.data.data?.idProgress;
+      if (!progressId) {
+        throw new Error("Tiến độ học không hợp lệ");
+      }
+
+      await api.put(`/lesson/progress/${progressId}`, {
+        status: "completed",
+        completedAt: new Date().toISOString(),
+      });
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        await api.post("/lesson/progress", {
+          idUser,
+          idLesson,
+          status: "completed",
+          completedAt: new Date().toISOString(),
+        });
+        return;
+      }
+
+      throw error;
+    }
   },
 };

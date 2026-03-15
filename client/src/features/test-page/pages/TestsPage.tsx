@@ -2,9 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AchievementBoard } from "../components/AchievementBoard";
 import { ExternalPlatforms } from "../components/ExternalPlatforms";
 import { InternalQuizList } from "../components/InternalQuizList";
-import { achievements, internalQuizzes, quizPlatforms } from "../stores/testsData";
+import { useGetTests } from "../hooks/useGetTests";
+import { quizPlatforms } from "../stores/testsData";
 
 export default function TestsPage() {
+  const { achievements, internalQuizzes, isLoading, error } = useGetTests();
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header */}
@@ -15,11 +18,19 @@ export default function TestsPage() {
         </p>
       </div>
 
-      <AchievementBoard achievements={achievements} />
+      {error ? (
+        <p className="text-center text-red-500">{error}</p>
+      ) : (
+        <AchievementBoard achievements={achievements} />
+      )}
 
       <ExternalPlatforms quizPlatforms={quizPlatforms} />
 
-      <InternalQuizList internalQuizzes={internalQuizzes} />
+      {isLoading ? (
+        <p className="text-center text-gray-500">Đang tải bài kiểm tra...</p>
+      ) : (
+        <InternalQuizList internalQuizzes={internalQuizzes} />
+      )}
 
       {/* Tips Section */}
       <Card className="bg-gradient-to-br from-amber-100 to-orange-100 border-2 border-amber-300">

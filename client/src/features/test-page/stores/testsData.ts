@@ -1,6 +1,4 @@
 import type {
-  AchievementStats,
-  InternalQuiz,
   QuizPlatform,
 } from "../schemas/tests.types";
 
@@ -31,53 +29,3 @@ export const quizPlatforms: QuizPlatform[] = [
   },
 ];
 
-export const internalQuizzes: InternalQuiz[] = [
-  {
-    id: 1,
-    title: "Kiểm tra: Văn hóa Đông Sơn",
-    topic: "Thời Tiền sử",
-    questions: 15,
-    duration: "20 phút",
-    difficulty: "Dễ",
-    score: 85,
-    completed: true,
-  },
-  {
-    id: 2,
-    title: "Kiểm tra: Khởi nghĩa Hai Bà Trưng",
-    topic: "Bắc thuộc",
-    questions: 20,
-    duration: "25 phút",
-    difficulty: "Trung bình",
-    score: null,
-    completed: false,
-  },
-  {
-    id: 3,
-    title: "Kiểm tra: Triều đại Lý - Trần",
-    topic: "Phong kiến",
-    questions: 25,
-    duration: "30 phút",
-    difficulty: "Khó",
-    score: null,
-    completed: false,
-  },
-  {
-    id: 4,
-    title: "Tổng hợp: Lịch sử Việt Nam cổ đại",
-    topic: "Tổng hợp",
-    questions: 40,
-    duration: "45 phút",
-    difficulty: "Khó",
-    score: null,
-    completed: false,
-  },
-];
-
-export const achievements: AchievementStats = {
-  totalTests: 24,
-  completed: 8,
-  averageScore: 82,
-  bestScore: 95,
-  streak: 5,
-};

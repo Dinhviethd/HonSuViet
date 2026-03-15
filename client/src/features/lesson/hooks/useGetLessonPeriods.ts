@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "@/features/auth/stores/authStore";
 import type { LessonPeriod } from "../schemas/lesson.types";
 import { lessonService } from "../services/lessonService";
 
@@ -9,6 +10,7 @@ interface UseGetLessonPeriodsReturn {
 }
 
 export function useGetLessonPeriods(): UseGetLessonPeriodsReturn {
+  const user = useAuth((state) => state.user);
   const [periods, setPeriods] = useState<LessonPeriod[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +22,7 @@ export function useGetLessonPeriods(): UseGetLessonPeriodsReturn {
     setError(null);
 
     lessonService
-      .getLessonPeriods()
+      .getLessonPeriods(user?.idUser ? String(user.idUser) : undefined)
       .then((data) => {
         if (isMounted) {
           setPeriods(data);
@@ -40,7 +42,7 @@ export function useGetLessonPeriods(): UseGetLessonPeriodsReturn {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [user?.idUser]);
 
   return { periods, isLoading, error };
 }

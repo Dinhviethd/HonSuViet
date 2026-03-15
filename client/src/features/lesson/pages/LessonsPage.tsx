@@ -27,7 +27,7 @@ export default function LessonsPage() {
       <LessonProgress lessonPeriods={periods} />
 
       <div className="space-y-8">
-        {periods.map((period, periodIndex) => (
+        {periods.map((period) => (
           <LessonPeriodCard key={period.id} period={period}  />
         ))}
       </div>

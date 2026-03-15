@@ -3,6 +3,12 @@ import { AppDataSource } from '@/configs/database.config';
 import { QuizAttempt } from '@/modules/quiz/entities/quiz_attempt.entity';
 import { CreateQuizAttemptInput, UpdateQuizAttemptInput } from '@/modules/quiz/schemas/quiz.schema';
 
+export interface UserQuizStats {
+  distinctCompletedQuizzes: number;
+  averageScore: number;
+  highestScore: number;
+}
+
 export class QuizAttemptRepository {
   private repository: Repository<QuizAttempt>;
 
@@ -70,6 +76,22 @@ export class QuizAttemptRepository {
   async delete(idAttempt: string): Promise<boolean> {
     const result = await this.repository.delete(idAttempt);
     return (result.affected ?? 0) > 0;
+  }
+
+  async getStatsByUser(idUser: string): Promise<UserQuizStats> {
+    const [row] = await AppDataSource.query<UserQuizStats[]>(
+      `
+      SELECT
+        COUNT(DISTINCT qa."idQuiz")::int                             AS "distinctCompletedQuizzes",
+        COALESCE(ROUND(AVG(qa."scorePercentage")), 0)::int           AS "averageScore",
+        COALESCE(MAX(qa."scorePercentage"), 0)::int                  AS "highestScore"
+      FROM quiz_attempts qa
+      WHERE qa."idUser" = $1
+        AND qa.status = 'completed'
+      `,
+      [idUser],
+    );
+    return row;
   }
 }
 

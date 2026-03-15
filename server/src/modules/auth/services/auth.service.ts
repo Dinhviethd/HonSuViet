@@ -7,12 +7,15 @@ import {
   ForgotPasswordInput,
   ResetPasswordInput,
   VerifyOTPInput,
+  UpdateCurrentProfileInput,
+  ChangePasswordInput,
   AuthResponse,
   UserResponse,
 } from '@/modules/auth/schemas/auth.schema';
 import { AppError } from '@/utils/error.response';
 import { User } from "@/modules/auth/entities/user.model";
 import { generateOTP, sendOTPEmail } from '@/utils/email';
+import { uploadBufferToCloudinary } from '@/utils/upload';
 
 
 export class AuthService {
@@ -112,6 +115,61 @@ export class AuthService {
       throw new AppError(404, 'User không tồn tại');
     }
     return this.toUserResponse(user);
+  }
+
+  async updateCurrentProfile(userId: string, input: UpdateCurrentProfileInput): Promise<UserResponse> {
+    const user = await this.userRepo.findById(userId);
+    if (!user) {
+      throw new AppError(404, 'User không tồn tại');
+    }
+
+    const updatedUser = await this.userRepo.update(userId, input);
+    if (!updatedUser) {
+      throw new AppError(404, 'User không tồn tại');
+    }
+
+    return this.toUserResponse(updatedUser);
+  }
+
+  async changePassword(userId: string, input: ChangePasswordInput): Promise<void> {
+    const user = await this.userRepo.findById(userId);
+    if (!user) {
+      throw new AppError(404, 'User không tồn tại');
+    }
+
+    const isPasswordValid = await bcrypt.compare(input.currentPassword, user.password);
+    if (!isPasswordValid) {
+      throw new AppError(400, 'Mật khẩu hiện tại không chính xác');
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(input.newPassword, salt);
+
+    await this.userRepo.update(userId, {
+      password: hashedPassword,
+    });
+  }
+
+  async uploadAvatar(userId: string, fileBuffer: Buffer): Promise<UserResponse> {
+    const user = await this.userRepo.findById(userId);
+    if (!user) {
+      throw new AppError(404, 'User không tồn tại');
+    }
+
+    const uploadResult = await uploadBufferToCloudinary(fileBuffer, {
+      folder: 'honsuviet/avatars',
+      publicId: `${userId}-${Date.now()}`,
+    });
+
+    const updatedUser = await this.userRepo.update(userId, {
+      avatarUrl: uploadResult.secure_url,
+    });
+
+    if (!updatedUser) {
+      throw new AppError(404, 'User không tồn tại');
+    }
+
+    return this.toUserResponse(updatedUser);
   }
 
   async logout(userId: string): Promise<void> {

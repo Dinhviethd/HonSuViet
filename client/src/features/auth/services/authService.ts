@@ -30,6 +30,17 @@ export interface ResetPasswordRequest {
   confirmPassword: string;
 }
 
+export interface UpdateProfileRequest {
+  name?: string;
+  phone?: string;
+}
+
+export interface ChangePasswordRequest {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
 export interface AuthResponse {
   success: boolean;
   message: string;
@@ -84,6 +95,38 @@ export const authService = {
       useAuth.getState().setUser(response.data.data);
     }
     
+    return response.data;
+  },
+
+  async updateProfile(data: UpdateProfileRequest): Promise<ApiResponse<User>> {
+    const response = await api.put<ApiResponse<User>>('/auth/me', data);
+
+    if (response.data.success && response.data.data) {
+      useAuth.getState().setUser(response.data.data);
+    }
+
+    return response.data;
+  },
+
+  async uploadAvatar(file: File): Promise<ApiResponse<User>> {
+    const formData = new FormData();
+    formData.append('avatar', file);
+
+    const response = await api.post<ApiResponse<User>>('/auth/avatar', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    if (response.data.success && response.data.data) {
+      useAuth.getState().setUser(response.data.data);
+    }
+
+    return response.data;
+  },
+
+  async changePassword(data: ChangePasswordRequest): Promise<ApiResponse> {
+    const response = await api.put<ApiResponse>('/auth/change-password', data);
     return response.data;
   },
 
