@@ -117,74 +117,74 @@ const newsItems: NewsItem[] = [
 
 const historicalTimeline: TimelineEvent[] = [
   {
-    year: "2879 TCN",
-    title: "Vua Hùng dựng nước",
-    description: "Khởi nguồn lịch sử dân tộc Việt Nam",
-    period: "Thời Hồng Bàng",
-    color: "from-orange-600 to-red-600",
-  },
-  {
-    year: "257 TCN",
-    title: "Thục Phán lập nước Âu Lạc",
-    description: "Xây thành Cổ Loa, hình thành nhà nước đầu tiên",
-    period: "Thời Thục",
-    color: "from-yellow-600 to-orange-600",
-  },
-  {
-    year: "111 TCN",
-    title: "Bắc thuộc lần thứ nhất",
-    description: "Bắt đầu 1000 năm Bắc thuộc và đấu tranh giành độc lập",
-    period: "Bắc thuộc",
-    color: "from-gray-600 to-gray-700",
-  },
-  {
-    year: "40 - 43",
-    title: "Khởi nghĩa Hai Bà Trưng",
-    description: "Cuộc khởi nghĩa anh dũng chống ách thống trị phương Bắc",
-    period: "Đấu tranh",
-    color: "from-pink-600 to-red-600",
-  },
-  {
-    year: "938",
-    title: "Ngô Quyền đánh thắng sông Bạch Đằng",
-    description: "Kết thúc nghìn năm Bắc thuộc, mở ra thời kỳ độc lập",
-    period: "Độc lập",
-    color: "from-blue-600 to-cyan-600",
-  },
-  {
-    year: "1010",
-    title: "Lý Thái Tổ dời đô về Thăng Long",
-    description: "Khởi đầu thời kỳ phồn vinh của triều đại Lý",
-    period: "Thời Lý",
-    color: "from-purple-600 to-pink-600",
-  },
-  {
-    year: "1225",
-    title: "Trần Thủ Độ lập triều Trần",
-    description: "Thời kỳ vàng son chống giặc ngoại xâm",
+    year: "Tháng 1/1226",
+    title: "Nhà Trần thành lập",
+    description: "Lý Chiêu Hoàng nhường ngôi cho Trần Cảnh.",
     period: "Thời Trần",
     color: "from-amber-600 to-yellow-600",
   },
   {
-    year: "1428",
-    title: "Lê Lợi lập triều Lê",
-    description: "Khởi nghĩa Lam Sơn thành công, đuổi quân Minh",
-    period: "Thời Lê",
-    color: "from-green-600 to-emerald-600",
+    year: "1258",
+    title: "Kháng chiến chống Nguyên - Mông lần I",
+    description: "Thắng lợi tại Đông Bộ Đầu, giải phóng Thăng Long.",
+    period: "Thời Trần",
+    color: "from-orange-600 to-red-600",
   },
   {
-    year: "1802",
-    title: "Nguyễn Ánh thống nhất đất nước",
-    description: "Lập triều Nguyễn, đặt tên nước là Việt Nam",
-    period: "Triều Nguyễn",
+    year: "1285",
+    title: "Kháng chiến chống Nguyên - Mông lần II",
+    description: "Thắng lớn tại Hàm Tử, Chương Dương.",
+    period: "Thời Trần",
+    color: "from-red-600 to-rose-700",
+  },
+  {
+    year: "1287 - 1288",
+    title: "Kháng chiến chống Nguyên - Mông lần III",
+    description: "Chiến thắng oanh liệt trên sông Bạch Đằng (1288).",
+    period: "Thời Trần",
+    color: "from-red-700 to-red-900",
+  },
+  {
+    year: "1299",
+    title: "Sáng lập Thiền phái Trúc Lâm",
+    description: "Dòng thiền Trần Nhân Tông sáng lập.",
+    period: "Thời Trần",
+    color: "from-emerald-600 to-teal-600",
+  },
+  {
+    year: "1306",
+    title: "Công chúa Huyền Trân lấy Chế Mân",
+    description: "Thu nhận hai châu Ô, Lý.",
+    period: "Thời Trần",
+    color: "from-pink-500 to-rose-500",
+  },
+  {
+    year: "1400",
+    title: "Nhà Hồ thành lập",
+    description: "Hồ Quý Ly lên ngôi vua, đặt quốc hiệu Đại Ngu.",
+    period: "Thời Hồ",
+    color: "from-blue-600 to-indigo-600",
+  },
+  {
+    year: "1401",
+    title: "Thay đổi ngôi vị nhà Hồ",
+    description: "Hồ Quý Ly nhường ngôi cho Hồ Hán Thương.",
+    period: "Thời Hồ",
     color: "from-indigo-600 to-purple-600",
   },
   {
-    year: "1945",
-    title: "Tuyên ngôn Độc lập",
-    description: "Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập",
-    period: "Hiện đại",
-    color: "from-red-600 to-yellow-500",
+    year: "1406",
+    title: "Nhà Minh xâm lược",
+    description: 'Lấy cớ "Phù Trần diệt Hồ" để tràn sang xâm lược.',
+    period: "Thời Hồ",
+    color: "from-gray-500 to-gray-700",
+  },
+  {
+    year: "1407",
+    title: "Nhà Hồ sụp đổ",
+    description: "Cha con Hồ Quý Ly bị bắt, đất nước bị đô hộ.",
+    period: "Thời Hồ",
+    color: "from-slate-700 to-gray-900",
   },
 ];
 
@@ -198,13 +198,13 @@ export function Home() {
         <HeroSection />
         <HistoricalCarousel frames={historicalFrames} />
         <Suspense fallback={<SectionSkeleton />}>
-          <NewsTicker items={newsItems} />
+          <QuickAccess />
         </Suspense>
         <Suspense fallback={<SectionSkeleton />}>
           <TimelineSection events={historicalTimeline} />
         </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <QuickAccess />
+                <Suspense fallback={<SectionSkeleton />}>
+          <NewsTicker items={newsItems} />
         </Suspense>
       </div>
     </div>

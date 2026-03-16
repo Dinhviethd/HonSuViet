@@ -9,7 +9,7 @@ interface AchievementBoardProps {
 export function AchievementBoard({ achievements }: AchievementBoardProps) {
 	return (
 		<div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-			<Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-none">
+			<Card className="bg-blue-800 text-white border-none">
 				<CardContent className="p-6 text-center">
 					<BarChart3 className="w-8 h-8 mx-auto mb-2" />
 					<p className="text-3xl font-bold">{achievements.completed}</p>
@@ -17,7 +17,7 @@ export function AchievementBoard({ achievements }: AchievementBoardProps) {
 				</CardContent>
 			</Card>
 
-			<Card className="bg-gradient-to-br from-green-500 to-green-600 text-white border-none">
+			<Card className="bg-green-700 text-white border-none">
 				<CardContent className="p-6 text-center">
 					<Target className="w-8 h-8 mx-auto mb-2" />
 					<p className="text-3xl font-bold">{achievements.averageScore}%</p>
@@ -25,7 +25,7 @@ export function AchievementBoard({ achievements }: AchievementBoardProps) {
 				</CardContent>
 			</Card>
 
-			<Card className="bg-gradient-to-br from-yellow-500 to-orange-500 text-white border-none">
+			<Card className="bg-orange-700 text-white border-none">
 				<CardContent className="p-6 text-center">
 					<Trophy className="w-8 h-8 mx-auto mb-2" />
 					<p className="text-3xl font-bold">{achievements.bestScore}%</p>
@@ -33,7 +33,7 @@ export function AchievementBoard({ achievements }: AchievementBoardProps) {
 				</CardContent>
 			</Card>
 
-			<Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white border-none">
+			<Card className="bg-purple-700 text-white border-none">
 				<CardContent className="p-6 text-center">
 					<Sparkles className="w-8 h-8 mx-auto mb-2" />
 					<p className="text-3xl font-bold">{achievements.streak}</p>
@@ -41,7 +41,7 @@ export function AchievementBoard({ achievements }: AchievementBoardProps) {
 				</CardContent>
 			</Card>
 
-			<Card className="bg-gradient-to-br from-pink-500 to-rose-600 text-white border-none">
+			<Card className="bg-rose-700 text-white border-none">
 				<CardContent className="p-6 text-center">
 					<Clock className="w-8 h-8 mx-auto mb-2" />
 					<p className="text-3xl font-bold">{achievements.totalTests}</p>

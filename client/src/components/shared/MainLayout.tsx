@@ -334,7 +334,7 @@ export default function HonSuVietLayout() {
               <h3 className="font-bold text-yellow-300 mb-3 text-lg">Nguồn tham khảo</h3>
               <ul className="text-sm text-amber-200 space-y-1">
                 <li>• Bảo tàng Lịch sử Quốc gia</li>
-                <li>• Người kể lịch</li>
+                <li>• Người kể sử</li>
                 <li>• Đại Việt Kỳ Nhân</li>
               </ul>
             </div>
