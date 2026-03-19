@@ -11,10 +11,10 @@ async function runSeeds() {
     
     console.log('🌱 Running database seeds...');
     
-    await seedRoles();
-    await seedChapters();
+    // await seedRoles();
+    // await seedChapters();
     await seedLessons();
-    await seedQuizzes();
+    // await seedQuizzes();
     
     console.log('✅ All seeds completed!');
     process.exit(0);
