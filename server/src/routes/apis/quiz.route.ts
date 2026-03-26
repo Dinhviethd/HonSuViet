@@ -6,7 +6,6 @@ import { quizAttemptController } from '@/modules/quiz/controllers/quiz-attempt.c
 
 const router = Router();
 
-// ─── Quizzes ──────────────────────────────────────
 router.get('/', quizController.getAll);
 router.get('/paginated', quizController.getAllPaginated);
 router.get('/stats', quizAttemptController.getTotalQuizzes);
@@ -16,21 +15,18 @@ router.post('/', quizController.create);
 router.put('/:id', quizController.update);
 router.delete('/:id', quizController.delete);
 
-// ─── Questions ────────────────────────────────────
 router.get('/questions/:id', questionController.getById);
 router.get('/:quizId/questions', questionController.getByQuiz);
 router.post('/questions', questionController.create);
 router.put('/questions/:id', questionController.update);
 router.delete('/questions/:id', questionController.delete);
 
-// ─── Answers ──────────────────────────────────────
 router.get('/answers/:id', answerController.getById);
 router.get('/questions/:questionId/answers', answerController.getByQuestion);
 router.post('/answers', answerController.create);
 router.put('/answers/:id', answerController.update);
 router.delete('/answers/:id', answerController.delete);
 
-// ─── Quiz Attempts ────────────────────────────────
 router.get('/attempts/stats/user/:userId', quizAttemptController.getStatsByUser);
 router.get('/attempts/user/:userId', quizAttemptController.getByUser);
 router.get('/attempts/:id', quizAttemptController.getById);

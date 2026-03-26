@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/features/auth/stores/authStore";
 import { authService } from "@/features/auth/services/authService";
+import { PRESET_AVATAR_URLS } from "@/features/auth/constants/presetAvatars";
 import { ArrowLeft, Camera, KeyRound, Mail, Phone, Save, ShieldCheck, User } from "lucide-react";
 import { toast } from "sonner";
 
@@ -17,6 +18,7 @@ export default function ProfilePage() {
   });
   const [isSaving, setIsSaving] = useState(false);
   const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
+  const [isUpdatingPresetAvatar, setIsUpdatingPresetAvatar] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -81,6 +83,22 @@ export default function ProfilePage() {
     }
   };
 
+  const handleSelectPresetAvatar = async (avatarUrl: string) => {
+    if (currentUser?.avatarUrl === avatarUrl || isUpdatingPresetAvatar) {
+      return;
+    }
+
+    try {
+      setIsUpdatingPresetAvatar(true);
+      const response = await authService.updatePresetAvatar(avatarUrl);
+      toast.success(response.message || "Cập nhật avatar thành công");
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || "Không thể cập nhật avatar");
+    } finally {
+      setIsUpdatingPresetAvatar(false);
+    }
+  };
+
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       <div className="flex items-center gap-4">
@@ -112,7 +130,7 @@ export default function ProfilePage() {
             <button
               type="button"
               onClick={handlePickAvatar}
-              disabled={isUploadingAvatar}
+              disabled={isUploadingAvatar || isUpdatingPresetAvatar}
               className="relative w-24 h-24 rounded-full overflow-hidden shadow-lg ring-2 ring-amber-500 disabled:opacity-70"
               title="Nhấn để đổi ảnh đại diện"
             >
@@ -128,7 +146,35 @@ export default function ProfilePage() {
                 {isUploadingAvatar ? "Đang tải..." : "Đổi ảnh"}
               </div>
             </button>
-            <p className="text-xs text-amber-900/80">Nhấn vào ảnh để upload avatar mới</p>
+            <p className="text-xs text-amber-900/80">Nhấn vào ảnh để upload avatar từ máy</p>
+            <div className="space-y-2">
+              <p className="text-xs font-semibold text-amber-900">Hoặc chọn avatar mẫu</p>
+              <div className="grid grid-cols-4 gap-2">
+                {PRESET_AVATAR_URLS.map((avatarUrl) => {
+                  const isSelected = currentUser?.avatarUrl === avatarUrl;
+
+                  return (
+                    <button
+                      key={avatarUrl}
+                      type="button"
+                      onClick={() => handleSelectPresetAvatar(avatarUrl)}
+                      disabled={isUpdatingPresetAvatar || isUploadingAvatar}
+                      className={`relative h-14 w-14 overflow-hidden rounded-full border-2 transition ${
+                        isSelected
+                          ? "border-red-700 ring-2 ring-red-300"
+                          : "border-amber-300 hover:border-red-500"
+                      } disabled:cursor-not-allowed disabled:opacity-70`}
+                      title="Chọn avatar mẫu"
+                    >
+                      <img src={avatarUrl} alt="Avatar mẫu" className="h-full w-full object-cover" />
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="text-[11px] text-amber-900/80">
+                {isUpdatingPresetAvatar ? "Đang cập nhật avatar mẫu..." : "Chọn một ảnh trong 12 avatar mặc định"}
+              </p>
+            </div>
             <div>
               <p className="text-xl font-bold text-gray-900">{currentUser?.name || "Người dùng"}</p>
               <p className="text-sm text-gray-600">{currentUser?.email}</p>

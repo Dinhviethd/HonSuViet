@@ -21,8 +21,6 @@ app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser()); 
 
-app.use('/upload', express.static(path.join(__dirname, '../upload')));
-
 app.use(cors({
     origin: process.env.CLIENT_URL || "*",
     credentials: true,

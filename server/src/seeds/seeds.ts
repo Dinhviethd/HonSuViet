@@ -13,8 +13,8 @@ async function runSeeds() {
     
     // await seedRoles();
     // await seedChapters();
-    await seedLessons();
-    // await seedQuizzes();
+    // await seedLessons();
+    await seedQuizzes();
     
     console.log('✅ All seeds completed!');
     process.exit(0);

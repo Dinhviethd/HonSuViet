@@ -5,14 +5,12 @@ import { xpTransactionController } from '@/modules/gamification/controllers/xp-t
 
 const router = Router();
 
-// ─── Level Config ─────────────────────────────────
 router.get('/levels', levelConfigController.getAll);
 router.get('/levels/:id', levelConfigController.getById);
 router.post('/levels', levelConfigController.create);
 router.put('/levels/:id', levelConfigController.update);
 router.delete('/levels/:id', levelConfigController.delete);
 
-// ─── User Stats ───────────────────────────────────
 router.get('/stats', userStatController.getAll);
 router.get('/stats/:id', userStatController.getById);
 router.get('/stats/user/:userId', userStatController.getByUser);
@@ -20,7 +18,6 @@ router.post('/stats', userStatController.create);
 router.put('/stats/:id', userStatController.update);
 router.delete('/stats/:id', userStatController.delete);
 
-// ─── XP Transactions ──────────────────────────────
 router.get('/xp/:id', xpTransactionController.getById);
 router.get('/xp/user/:userId', xpTransactionController.getByUser);
 router.post('/xp', xpTransactionController.create);

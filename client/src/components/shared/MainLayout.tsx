@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
-import { BookOpen, Trophy, MessageSquare, BookMarked, Library, Gamepad2, FileText, GraduationCap, Search, User, LogIn, ChevronDown, Settings, KeyRound, LogOut } from "lucide-react";
+import { BookOpen, Trophy, MessageSquare, BookMarked, Library, FileText, GraduationCap, Search, User, LogIn, ChevronDown, Settings, KeyRound, LogOut } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
@@ -18,9 +18,8 @@ const navigation = [
   { name: "Bài học", href: "/lessons", icon: GraduationCap },
   { name: "Kiểm tra", href: "/tests", icon: FileText },
   { name: "Kho tư liệu", href: "/resources", icon: Library },
-  { name: "Diễn đàn", href: "/forum", icon: MessageSquare },
+  { name: "Khám phá", href: "/forum", icon: MessageSquare },
   { name: "Từ điển", href: "/dictionary", icon: BookMarked },
-  { name: "Trò chơi", href: "/games", icon: Gamepad2 },
 ];
 
 export default function HonSuVietLayout() {

@@ -4,13 +4,15 @@ import { UserRepository, userRepository } from '@/modules/auth/repositories/user
 import {
   RegisterInput,
   LoginInput,
-  ForgotPasswordInput,
+  SendOTPInput,
   ResetPasswordInput,
   VerifyOTPInput,
   UpdateCurrentProfileInput,
   ChangePasswordInput,
+  PresetAvatarUrl,
   AuthResponse,
   UserResponse,
+  PRESET_AVATAR_URLS,
 } from '@/modules/auth/schemas/auth.schema';
 import { AppError } from '@/utils/error.response';
 import { User } from "@/modules/auth/entities/user.model";
@@ -38,6 +40,8 @@ export class AuthService {
     
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
+    const randomAvatarUrl =
+      PRESET_AVATAR_URLS[Math.floor(Math.random() * PRESET_AVATAR_URLS.length)];
 
     
     const newUser = await this.userRepo.create({
@@ -46,6 +50,7 @@ export class AuthService {
       password: hashedPassword,
       phone,
       emailVerified: false,
+      avatarUrl: randomAvatarUrl,
     });
 
     
@@ -172,11 +177,28 @@ export class AuthService {
     return this.toUserResponse(updatedUser);
   }
 
+  async updatePresetAvatar(userId: string, avatarUrl: PresetAvatarUrl): Promise<UserResponse> {
+    const user = await this.userRepo.findById(userId);
+    if (!user) {
+      throw new AppError(404, 'User không tồn tại');
+    }
+
+    const updatedUser = await this.userRepo.update(userId, {
+      avatarUrl,
+    });
+
+    if (!updatedUser) {
+      throw new AppError(404, 'User không tồn tại');
+    }
+
+    return this.toUserResponse(updatedUser);
+  }
+
   async logout(userId: string): Promise<void> {
     // Có thể thêm logic để invalidate token ở đây
   }
 
-  async forgotPassword(input: ForgotPasswordInput): Promise<void> {
+  async forgotPassword(input: SendOTPInput): Promise<void> {
     const { email } = input;
     const user = await this.userRepo.findByEmail(email);
     if (!user) {

@@ -4,11 +4,12 @@ import {
   registerSchema,
   loginSchema,
   refreshTokenSchema,
-  forgotPasswordSchema,
+  sendOTPSchema,
   verifyOTPSchema,
   resetPasswordSchema,
   updateCurrentProfileSchema,
   changePasswordSchema,
+  updatePresetAvatarSchema,
   ApiResponse,
   AuthResponse,
   UserResponse,
@@ -196,6 +197,31 @@ class AuthController {
     res.status(200).json(response);
   });
 
+  updatePresetAvatar = asyncHandler(async (req: Request, res: Response) => {
+    const userId = req.user?.userId;
+    if (!userId) {
+      throw new AppError(401, 'Unauthorized');
+    }
+
+    const validationResult = updatePresetAvatarSchema.safeParse(req.body);
+    if (!validationResult.success) {
+      const errorMessage = validationResult.error.issues
+        .map((err: any) => err.message)
+        .join(', ');
+      throw new AppError(400, errorMessage);
+    }
+
+    const user = await authService.updatePresetAvatar(userId, validationResult.data.avatarUrl);
+
+    const response: ApiResponse<UserResponse> = {
+      success: true,
+      message: 'Cập nhật avatar thành công',
+      data: user,
+    };
+
+    res.status(200).json(response);
+  });
+
   // Đăng xuất
   logout = asyncHandler(async (req: Request, res: Response) => {
     const userId = req.user?.userId;
@@ -219,9 +245,9 @@ class AuthController {
   });
 
   // Quên mật khẩu - gửi OTP
-  forgotPassword = asyncHandler(async (req: Request, res: Response) => {
+  sendOTP = asyncHandler(async (req: Request, res: Response) => {
     // Validate input
-    const validationResult = forgotPasswordSchema.safeParse(req.body);
+    const validationResult = sendOTPSchema.safeParse(req.body);
     if (!validationResult.success) {
       const errorMessage = validationResult.error.issues
         .map((err: any) => err.message)
