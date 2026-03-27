@@ -12,9 +12,9 @@ import type {
 } from "../schemas/lesson.types";
 
 const periodThemes = [
-  { color: "from-amber-600 to-orange-600", icon: "🏺" },
-  { color: "from-red-600 to-rose-600", icon: "⚔️" },
-  { color: "from-yellow-600 to-amber-700", icon: "👑" },
+  { color: "from-amber-600 to-orange-600", icon: "Ⅰ." },
+  { color: "from-red-600 to-rose-600", icon: "Ⅱ." },
+  { color: "from-yellow-600 to-amber-700", icon: "Ⅲ." },
   { color: "from-blue-600 to-indigo-600", icon: "🏛️" },
 ] as const;
 

@@ -44,16 +44,16 @@ export const BackgroundEffect = memo(function BackgroundEffect() {
       />
 
       {/* Traditional Patterns — CSS rotation */}
-      <div
-        className="absolute top-1/3 right-10 text-8xl opacity-5 animate-spin-slow"
-      >
-        ☯
-      </div>
-      <div
-        className="absolute bottom-1/3 left-10 text-8xl opacity-5 animate-spin-slow-reverse"
-      >
-        ⚛
-      </div>
+      <img
+        src="/chim.png"
+        alt=""
+        className="absolute top-3/4 right-10 w-40 opacity-20 h-40 object-contain transform scale-x-[-1]"
+      />
+      <img
+        src="/chim.png"
+        alt=""
+        className="absolute bottom-1/3 left-10 w-40 opacity-20 h-40 object-contain rotate-12"
+      />
 
       {/* Decorative fire elements — CSS animation (5 elements) */}
       {[0, 1, 2, 3, 4].map((i) => (

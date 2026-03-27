@@ -57,7 +57,7 @@ export function InternalQuizList({ internalQuizzes }: InternalQuizListProps) {
 
 							<Link to={`/tests/${quiz.id}`}>
 								<Button className={`w-full ${quiz.completed ? "bg-green-600 hover:bg-green-700" : "bg-red-600 hover:bg-red-700"}`}>
-									{quiz.completed ? "🔄 Làm lại" : "▶️ Bắt đầu kiểm tra"}
+									{quiz.completed ? "Làm lại" : "Bắt đầu kiểm tra"}
 								</Button>
 							</Link>
 						</CardContent>

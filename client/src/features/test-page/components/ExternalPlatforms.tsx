@@ -29,7 +29,6 @@ export function ExternalPlatforms({ quizPlatforms }: ExternalPlatformsProps) {
 					>
 						<div className={`h-2 bg-gradient-to-r ${platform.color}`} />
 						<CardHeader>
-							<div className="text-5xl mb-3">{platform.icon}</div>
 							<CardTitle className="text-2xl text-gray-800">{platform.name}</CardTitle>
 							<CardDescription className="text-base">{platform.description}</CardDescription>
 						</CardHeader>
