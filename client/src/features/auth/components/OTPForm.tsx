@@ -35,7 +35,6 @@ export function OTPForm({
     <Card className="border-4 border-yellow-500 bg-gradient-to-br from-red-50 to-amber-50 shadow-xl" {...props}>
       <CardHeader>
         <CardTitle className="text-2xl font-black text-red-800 flex items-center gap-2">
-          <span className="text-3xl">🐉</span>
           Nhập mã xác thực
         </CardTitle>
         <CardDescription className="text-gray-600">

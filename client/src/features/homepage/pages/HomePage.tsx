@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 import { BackgroundEffect } from "../components/BackgroundEffect";
 import { HeroSection } from "../components/HeroSection";
 import { HistoricalCarousel } from "../components/HistoricalCarousel";
-import type { HistoricalFrame, NewsItem, TimelineEvent } from "../schemas/home.types";
+import type { HistoricalFrame, NewsItem } from "../schemas/home.types";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
