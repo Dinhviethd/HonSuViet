@@ -8,7 +8,7 @@ export function VideoPlayer() {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle className="text-red-800">🎥 Video bài giảng</CardTitle>
+          <CardTitle className="text-red-800">Video bài giảng</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="aspect-video bg-gray-200 rounded-lg flex items-center justify-center">
@@ -23,7 +23,7 @@ export function VideoPlayer() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-red-800">🖼️ Hình ảnh minh họa</CardTitle>
+          <CardTitle className="text-red-800">Hình ảnh minh họa</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 gap-4">

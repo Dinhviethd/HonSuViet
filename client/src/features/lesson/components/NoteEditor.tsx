@@ -5,7 +5,7 @@ export function NoteEditor() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-red-800">📝 Ghi chú của bạn</CardTitle>
+        <CardTitle className="text-red-800">Ghi chú của bạn</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <textarea
