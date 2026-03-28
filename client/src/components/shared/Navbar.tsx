@@ -14,7 +14,6 @@ import { useAuth } from "@/features/auth/stores/authStore"
 import { authService } from "@/features/auth/services/authService"
 import { useNavigate } from "react-router-dom"
 
-// Simple logo component for the navbar
 const Logo = () => {
   return (
   <img 

@@ -80,11 +80,46 @@ export default {
   				to: {
   					height: '0'
   				}
+  			},
+  			'cloud-right': {
+  				'0%, 100%': { transform: 'translateX(0) scale(1)' },
+  				'50%': { transform: 'translateX(200px) scale(1.2)' }
+  			},
+  			'cloud-left': {
+  				'0%, 100%': { transform: 'translateX(0) scale(1)' },
+  				'50%': { transform: 'translateX(-200px) scale(1.3)' }
+  			},
+  			'spin-slow': {
+  				from: { transform: 'rotate(0deg)' },
+  				to: { transform: 'rotate(360deg)' }
+  			},
+  			'spin-slow-reverse': {
+  				from: { transform: 'rotate(0deg)' },
+  				to: { transform: 'rotate(-360deg)' }
+  			},
+  			'fire': {
+  				'0%, 100%': { transform: 'translateY(0) scale(1)', opacity: '0.2' },
+  				'50%': { transform: 'translateY(-100px) scale(1.5)', opacity: '0.5' }
+  			},
+  			'title-pulse': {
+  				'0%, 100%': { transform: 'scale(1)' },
+  				'50%': { transform: 'scale(1.02)' }
+  			},
+  			'line-scale': {
+  				'0%, 100%': { transform: 'scaleX(1)' },
+  				'50%': { transform: 'scaleX(1.5)' }
   			}
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+  			'cloud-right': 'cloud-right 30s linear infinite',
+  			'cloud-left': 'cloud-left 35s linear infinite',
+  			'spin-slow': 'spin-slow 60s linear infinite',
+  			'spin-slow-reverse': 'spin-slow-reverse 50s linear infinite',
+  			'fire': 'fire 5s ease-in-out infinite',
+  			'title-pulse': 'title-pulse 4s ease-in-out infinite',
+  			'line-scale': 'line-scale 2s ease-in-out infinite'
   		}
   	}
   },

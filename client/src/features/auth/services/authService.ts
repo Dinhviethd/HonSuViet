@@ -14,7 +14,7 @@ export interface RegisterRequest {
   phone?: string;
 }
 
-export interface ForgotPasswordRequest {
+export interface SendOTPRequest {
   email: string;
 }
 
@@ -26,6 +26,17 @@ export interface VerifyOTPRequest {
 export interface ResetPasswordRequest {
   email: string;
   otp: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+export interface UpdateProfileRequest {
+  name?: string;
+  phone?: string;
+}
+
+export interface ChangePasswordRequest {
+  currentPassword: string;
   newPassword: string;
   confirmPassword: string;
 }
@@ -49,7 +60,6 @@ export interface ApiResponse<T = null> {
 export const authService = {
   async register(data: RegisterRequest): Promise<AuthResponse> {
     const response = await api.post<AuthResponse>('/auth/register', data);
-    console.log("test");
     if (response.data.success && response.data.data) {
       const { user, accessToken } = response.data.data;
       useAuth.getState().setAuth(user, accessToken);
@@ -88,8 +98,50 @@ export const authService = {
     return response.data;
   },
 
-  async forgotPassword(data: ForgotPasswordRequest): Promise<ApiResponse> {
-    const response = await api.post<ApiResponse>('/auth/forgot-password', data);
+  async updateProfile(data: UpdateProfileRequest): Promise<ApiResponse<User>> {
+    const response = await api.put<ApiResponse<User>>('/auth/me', data);
+
+    if (response.data.success && response.data.data) {
+      useAuth.getState().setUser(response.data.data);
+    }
+
+    return response.data;
+  },
+
+  async uploadAvatar(file: File): Promise<ApiResponse<User>> {
+    const formData = new FormData();
+    formData.append('avatar', file);
+
+    const response = await api.post<ApiResponse<User>>('/auth/avatar', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    if (response.data.success && response.data.data) {
+      useAuth.getState().setUser(response.data.data);
+    }
+
+    return response.data;
+  },
+
+  async updatePresetAvatar(avatarUrl: string): Promise<ApiResponse<User>> {
+    const response = await api.put<ApiResponse<User>>('/auth/avatar/preset', { avatarUrl });
+
+    if (response.data.success && response.data.data) {
+      useAuth.getState().setUser(response.data.data);
+    }
+
+    return response.data;
+  },
+
+  async changePassword(data: ChangePasswordRequest): Promise<ApiResponse> {
+    const response = await api.put<ApiResponse>('/auth/change-password', data);
+    return response.data;
+  },
+
+  async sendOTP(data: SendOTPRequest): Promise<ApiResponse> {
+    const response = await api.post<ApiResponse>('/auth/send-otp', data);
     return response.data;
   },
 

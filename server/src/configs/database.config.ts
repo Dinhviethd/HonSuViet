@@ -9,7 +9,11 @@ export const AppDataSource = new DataSource({
 
   ssl: { rejectUnauthorized: false },
 
-  entities: [__dirname + "/../models/*.{ts,js}"],
+  // Match entity files by naming convention so folder naming inconsistencies do not break metadata loading.
+  entities: [
+    __dirname + "/../modules/**/*.entity.{ts,js}",
+    __dirname + "/../modules/**/*.model.{ts,js}",
+  ],
   migrations: [__dirname + "/../migrations/*.{ts,js}"],
   synchronize: false,
 });

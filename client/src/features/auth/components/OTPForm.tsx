@@ -6,12 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field"
+import { Label } from "@/components/ui/label"
 import {
   InputOTP,
   InputOTPGroup,
@@ -37,55 +32,59 @@ export function OTPForm({
   ...props 
 }: OTPFormProps) {
   return (
-    <Card {...props}>
+    <Card className="border-4 border-yellow-500 bg-gradient-to-br from-red-50 to-amber-50 shadow-xl" {...props}>
       <CardHeader>
-        <CardTitle>Enter verification code</CardTitle>
-        <CardDescription>
-          We have sent a 6-digit code to the email <strong>{email}</strong>
+        <CardTitle className="text-2xl font-black text-red-800 flex items-center gap-2">
+          Nhập mã xác thực
+        </CardTitle>
+        <CardDescription className="text-gray-600">
+          Chúng tôi đã gửi mã 6 chữ số đến email <strong className="text-red-700">{email}</strong>
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={onSubmit}>
-          <FieldGroup>
-            <Field>
-              <FieldLabel htmlFor="otp">Verification Code</FieldLabel>
-              <InputOTP 
-                maxLength={6} 
-                id="otp" 
-                value={otp}
-                onChange={setOtp}
+        <form onSubmit={onSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="otp" className="text-gray-700 font-medium">Mã xác thực</Label>
+            <InputOTP 
+              maxLength={6} 
+              id="otp" 
+              value={otp}
+              onChange={setOtp}
+              disabled={loading}
+            >
+              <InputOTPGroup className="gap-2.5 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border-2 *:data-[slot=input-otp-slot]:border-amber-300">
+                <InputOTPSlot index={0} />
+                <InputOTPSlot index={1} />
+                <InputOTPSlot index={2} />
+                <InputOTPSlot index={3} />
+                <InputOTPSlot index={4} />
+                <InputOTPSlot index={5} />
+              </InputOTPGroup>
+            </InputOTP>
+            <p className="text-xs text-gray-500">
+              Nhập mã 6 chữ số đã được gửi đến email của bạn.
+            </p>
+          </div>
+          <Button
+            type="submit"
+            disabled={loading || otp.length !== 6}
+            className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 font-bold text-lg h-12"
+          >
+            {loading ? "Đang xác thực..." : "Xác thực"}
+          </Button>
+          <div className="text-center">
+            <p className="text-sm text-gray-600">
+              Không nhận được mã?{" "}
+              <button 
+                type="button" 
+                onClick={onResend}
                 disabled={loading}
+                className="text-red-700 font-medium underline hover:text-red-800 disabled:opacity-50"
               >
-                <InputOTPGroup className="gap-2.5 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border">
-                  <InputOTPSlot index={0} />
-                  <InputOTPSlot index={1} />
-                  <InputOTPSlot index={2} />
-                  <InputOTPSlot index={3} />
-                  <InputOTPSlot index={4} />
-                  <InputOTPSlot index={5} />
-                </InputOTPGroup>
-              </InputOTP>
-              <FieldDescription>
-                Enter the 6-digit code sent to your email.
-              </FieldDescription>
-            </Field>
-            <FieldGroup>
-              <Button type="submit" disabled={loading || otp.length !== 6} className="w-full">
-                {loading ? "Verifying..." : "Verify"}
-              </Button>
-              <FieldDescription className="text-center">
-                Didn't receive the code?{" "}
-                <button 
-                  type="button" 
-                  onClick={onResend}
-                  disabled={loading}
-                  className="underline hover:text-primary disabled:opacity-50"
-                >
-                  Gửi lại
-                </button>
-              </FieldDescription>
-            </FieldGroup>
-          </FieldGroup>
+                Gửi lại
+              </button>
+            </p>
+          </div>
         </form>
       </CardContent>
     </Card>

@@ -3,54 +3,139 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ImageWithFallback } from "../components/ImageWithFallback";
-import { Image, Video, Map, BookText, FileText, ExternalLink, Download } from "lucide-react";
+import { Image, Video, BookText, FileText, ExternalLink, Download } from "lucide-react";
+import mammoth from "mammoth";
 
 const imageGallery = [
-  { id: 1, title: "Trống đồng Ngọc Lũ", category: "Hiện vật", period: "Đông Sơn", src: "https://images.unsplash.com/photo-1714073619284-b71674885558?w=400" },
-  { id: 2, title: "Hoàng Thành Huế", category: "Di tích", period: "Triều Nguyễn", src: "https://images.unsplash.com/photo-1759508598711-a15d85b2ada0?w=400" },
-  { id: 3, title: "Chùa Một Cột", category: "Kiến trúc", period: "Thời Lý", src: "https://images.unsplash.com/photo-1740476376215-22fc302da920?w=400" },
-  { id: 4, title: "Phố cổ Hội An", category: "Di sản", period: "Thế kỷ 15-19", src: "https://images.unsplash.com/photo-1714073619284-b71674885558?w=400" },
-  { id: 5, title: "Văn Miếu Quốc Tử Giám", category: "Giáo dục", period: "Thời Lý-Trần", src: "https://images.unsplash.com/photo-1740476376215-22fc302da920?w=400" },
-  { id: 6, title: "Thành nhà Hồ", category: "Di tích", period: "Thời Hồ", src: "https://images.unsplash.com/photo-1759508598711-a15d85b2ada0?w=400" },
+  { id: 1, title: "Phật hoàng Trần Nhân Tông", category: "Nhân vật", period: "Nhà Trần", src: "/img/Các nhân vật lịch sử/Phật hoàng Trần Nhân Tông.png" },
+  { id: 2, title: "Hồ Quý Ly qua tranh sơn dầu", category: "Nhân vật", period: "Nhà Hồ", src: "/img/Các nhân vật lịch sử/Tranh sơn dầu vẽ Hồ Quý Ly bởi họa sĩ Hoàng Hoa Mai, 2012.jpg" },
+  { id: 3, title: "Thành nhà Hồ, Thanh Hóa", category: "Kiến trúc", period: "Nhà Hồ", src: "/img/Kiến trúc - công trình/Thành nhà Hồ, Thanh Hóa.jfif" },
+  { id: 4, title: "Đền Trần (Nam Định)", category: "Kiến trúc", period: "Nhà Trần", src: "/img/Kiến trúc - công trình/Đền Trần (Nam Định).png" },
+  { id: 5, title: "Kháng chiến Mông - Nguyên lần 3", category: "Quân sự", period: "Nhà Trần", src: "/img/Quân sự - Các cuộc chiến/Kháng chiến quân Mông - Nguyên lần 3.png" },
+  { id: 6, title: "Lược đồ Bạch Đằng 1288", category: "Quân sự", period: "Nhà Trần", src: "/img/Quân sự - Các cuộc chiến/Lược đồ Chiến thắng Bạch Đằng 1288.jpg" },
+  { id: 7, title: "Thông bảo hội sao", category: "Kinh tế", period: "Nhà Hồ", src: "/img/Kinh tế - Xã hội/Tình hình kinh tế - xã hội thời Hồ/Thông bảo hội sao.jpg" },
+  { id: 8, title: "Thương cảng cổ Vân Đồn", category: "Kinh tế", period: "Nhà Trần", src: "/img/Kinh tế - Xã hội/Tình hình kinh tế - xã hội thời Trần/Hoạt động buôn bán tại thương cảng Vân Đồn.webp" },
+  { id: 9, title: "Chùa Phổ Minh", category: "Tôn giáo", period: "Nhà Trần", src: "/img/Tôn giáo - tín ngưỡng/Chùa Phổ Minh.jpg" },
+  { id: 10, title: "Đền Trần Nam Định", category: "Tín ngưỡng", period: "Nhà Trần", src: "/img/Tôn giáo - tín ngưỡng/Đền Trần Nam Định.JPG" },
+  { id: 11, title: "Gốm sứ nhà Trần", category: "Nghệ thuật", period: "Nhà Trần", src: "/img/Văn hóa - Nghệ thuật/Gốm sứ nhà Trần (2).jpg" },
+  { id: 12, title: "Hoa văn đầu rồng thời Trần", category: "Nghệ thuật", period: "Nhà Trần", src: "/img/Văn hóa - Nghệ thuật/Hoa văn đầu rồng thời Trần.jpg" },
+  { id: 13, title: "Đền An Sinh", category: "Kiến trúc", period: "Nhà Trần", src: "/img/Kiến trúc - công trình/Đền An Sinh.jpg" },
+  { id: 14, title: "Thiền viện Trúc Lâm Yên Tử", category: "Kiến trúc", period: "Nhà Trần", src: "/img/Kiến trúc - công trình/Thiền Viện Trúc Lâm Yên Tử.webp" },
+  { id: 15, title: "Tháp Phổ Minh", category: "Kiến trúc", period: "Nhà Trần", src: "/img/Kiến trúc - công trình/Tháp Phổ Minh trên tờ 100 đồng.jpg" },
+  { id: 16, title: "Kháng chiến Mông - Nguyên lần 1", category: "Quân sự", period: "Nhà Trần", src: "/img/Quân sự - Các cuộc chiến/Kháng chiến quân Mông - Nguyên lần 1.png" },
+  { id: 17, title: "Kháng chiến Mông - Nguyên lần 2", category: "Quân sự", period: "Nhà Trần", src: "/img/Quân sự - Các cuộc chiến/Kháng chiến quân Mông - Nguyên lần 2.png" },
+  { id: 18, title: "Minh họa chiến thắng Bạch Đằng", category: "Quân sự", period: "Nhà Trần", src: "/img/Quân sự - Các cuộc chiến/Minh họa chiến thắng Bạch Đằng.jpg" },
+  { id: 19, title: "Bến Cái Làng - Vân Đồn", category: "Kinh tế", period: "Nhà Trần", src: "/img/Kinh tế - Xã hội/Tình hình kinh tế - xã hội thời Trần/Bến Cái Làng - Trung tâm thương cảng cổ Vân Đồn. Nguồn_ Bảo tàng Quảng Ninh.jpg" },
+  { id: 20, title: "Hình Mũ Quyển Vân thời Trần", category: "Kinh tế", period: "Nhà Trần", src: "/img/Kinh tế - Xã hội/Tình hình kinh tế - xã hội thời Trần/Hình 1. Ảnh Mũ Quyển Vân chụp từ Tam tài đồ hội.png" },
+  { id: 21, title: "Chùa Bối Khê", category: "Tôn giáo", period: "Nhà Trần", src: "/img/Tôn giáo - tín ngưỡng/Chùa Bối Khê.JPG" },
+  { id: 22, title: "Lễ hội đền Trần", category: "Tín ngưỡng", period: "Nhà Trần", src: "/img/Tôn giáo - tín ngưỡng/Lễ hội đền Trần Nam Định.JPG" },
+  { id: 23, title: "Bình gốm hoa lam Chu Đậu", category: "Nghệ thuật", period: "Nhà Trần", src: "/img/Văn hóa - Nghệ thuật/Bình gốm hoa lam Chu Đậu thời Trần, thế kỷ XIV. Viện bảo tàng Mỹ thuật Metropolitan, New York.jpg" },
+  { id: 24, title: "Rồng nhà Hồ", category: "Nghệ thuật", period: "Nhà Hồ", src: "/img/Văn hóa - Nghệ thuật/Rồng nhà Hồ.jpg" },
 ];
+
+const IMAGES_PER_PAGE = 6;
+const STORIES_PER_PAGE = 6;
 
 const videos = [
-  { id: 1, title: "Văn hóa Đông Sơn - Bí ẩn trống đồng", duration: "15:30", views: "125K", link: "https://www.youtube.com/results?search_query=dong+son+culture+vietnam" },
-  { id: 2, title: "Khởi nghĩa Hai Bà Trưng", duration: "12:45", views: "98K", link: "https://www.youtube.com/results?search_query=hai+ba+trung" },
-  { id: 3, title: "Trận Bạch Đằng 938 - Ngô Quyền", duration: "18:20", views: "156K", link: "https://www.youtube.com/results?search_query=bach+dang+ngo+quyen" },
-  { id: 4, title: "Trần Hưng Đạo đánh Nguyên Mông", duration: "22:10", views: "203K", link: "https://www.youtube.com/results?search_query=tran+hung+dao" },
-  { id: 5, title: "Lê Lợi và khởi nghĩa Lam Sơn", duration: "16:40", views: "87K", link: "https://www.youtube.com/results?search_query=le+loi+lam+son" },
-  { id: 6, title: "Cách mạng Tháng Tám 1945", duration: "25:15", views: "267K", link: "https://www.youtube.com/results?search_query=cach+mang+thang+tam" },
+  { id: 1, title: "Tóm tắt: Nhà Trần (1225 - 1400) | 3 lần chiến thắng quân Nguyên Mông", duration: "1:02:30", views: "566K", link: "https://www.youtube.com/watch?v=t3ID4gc7LVE" },
+  { id: 2, title: "12 VỊ VUA NHÀ TRẦN - TRIỀU ĐẠI NHIỀU CHIẾN CÔNG NHẤT LỊCH SỬ VIỆT NAM", duration: "12:45", views: "129K", link: "https://www.youtube.com/watch?si=ahrbO-4vdK0sKWc1&v=8Ex6CZulTKw&feature=youtu.be" },
+  { id: 3, title: "Thái Tông Trần Cảnh – Gánh nặng Đế Vương", duration: "18:20", views: "156K", link: "https://youtu.be/ZC4RN1NBRbQ?si=3zdkqqejIA-lEZPl" },
+  { id: 4, title: "VÂN ĐỒN 1288 – nhấn chìm 17 vạn lương, định đoạt lịch sử đưa TRẦN KHÁNH DƯ vào ngôi đền huyền thoại", duration: "22:10", views: "203K", link: "https://youtu.be/xhpyp63pqJc?si=CsIAKR1YfrrFpKE3" },
+  { id: 5, title: "Trần Quang Khải - Vị hoàng tử tài ba văn võ song toàn", duration: "16:40", views: "87K", link: "https://youtu.be/Drq3dXmlBso?si=pSVwHfJuww9yoCYe" },
+  { id: 6, title: "Kình ngư của Đại Việt - Danh tướng Yết Kiêu", duration: "25:15", views: "267K", link: "https://youtu.be/pCLUrSjsAkY?si=iDLEcSKBGkbVdF-A" },
 ];
 
-const historicalMaps = [
-  { id: 1, title: "Bản đồ Đại Việt thời Lý - Trần", period: "Thế kỷ 11-14" },
-  { id: 2, title: "Lãnh thổ Văn Lang - Âu Lạc", period: "Thời Tiền sử" },
-  { id: 3, title: "Giao Châu thời Bắc thuộc", period: "Thế kỷ 1-10" },
-  { id: 4, title: "Đại Việt thời Lê sơ", period: "Thế kỷ 15" },
-  { id: 5, title: "Đàng Trong - Đàng Ngoài", period: "Thế kỷ 16-18" },
-  { id: 6, title: "Việt Nam thời Pháp thuộc", period: "1858-1945" },
+
+const storyFiles = [
+  "An Tư công chúa hiến thân cứu nước.docx",
+  "Chu Văn An và người học trò thủy thần.docx",
+  "Huyền tích nàng Bình Khương kêu oan.docx",
+  "Kế hoạch mưu sát Hồ Quý Ly và cái chết của Trần Khát Chân.docx",
+  "Phạm Ngũ Lão - Đức thánh Phạm.docx",
+  "Phật Hoàng Trần Nhân Tông bỏ ngai đi tu.docx",
+  "Sự tích Huyền Trân Công Chúa_ Nước non ngàn dặm.docx",
+  "Sự tích Yết Kiêu.docx",
+  "Tiền giấy Thông bảo hội sao của Hồ Quý Ly.docx",
+  "Trần Khánh Dư_Từ kẻ bán than đến danh tướng cứu nước.docx",
+  "Trần Khát Chân tiêu diệt Chế Bồng Nga.docx",
+  "Trần Quốc Toản bóp nát quả cam.docx",
 ];
 
-const folkStories = [
-  { id: 1, title: "Truyền thuyết Thánh Gióng", era: "Hùng Vương", theme: "Anh hùng dân tộc" },
-  { id: 2, title: "Sơn Tinh - Thủy Tinh", era: "Hùng Vương", theme: "Thiên nhiên" },
-  { id: 3, title: "Bánh Chưng - Bánh Dày", era: "Hùng Vương", theme: "Truyền thống" },
-  { id: 4, title: "Mị Châu - Trọng Thủy", era: "An Dương Vương", theme: "Tình yêu lịch sử" },
-  { id: 5, title: "Chử Đồng Tử", era: "Thời Lý", theme: "Truyền thuyết" },
+const folkStories = storyFiles.map((fileName, index) => ({
+  id: index + 1,
+  fileName,
+  title: fileName.replace(/\.[^/.]+$/, ""),
+  era: "Trần - Hồ",
+  theme: "Truyện dân gian, danh nhân",
+}));
+
+const bookFiles = [
+  "Các triều đại Việt Nam.pdf",
+  "Cải cách Hồ Quý Ly.pdf",
+  "Nam Dược Thần Hiệu.pdf",
+  "TRẦN THỦ ĐỘ – DANH NHÂN TRUYỆN KÝ.pdf",
+  "Truyện danh nhân thời Trần-Lê.pdf",
+  "Đại Việt sử kí.pdf",
 ];
 
-const pdfsAndLinks = [
-  { title: "Giáo trình Lịch sử Việt Nam Cổ đại", type: "PDF", size: "12.5 MB", source: "Bộ Giáo dục và Đào tạo", link: "https://www.moet.gov.vn/" },
-  { title: "Atlas Lịch sử Việt Nam", type: "PDF", size: "25.3 MB", source: "Nhà xuất bản Giáo dục", link: "https://nxbgd.vn/" },
-  { title: "Bảo tàng Lịch sử Quốc gia", type: "Website", size: "-", source: "Bảo tàng Lịch sử Quốc gia", link: "https://baotanglichsu.vn/" },
-  { title: "Người kể lịch", type: "Website", size: "-", source: "Nền tảng giáo dục", link: "https://nguoikelic.vn/" },
-  { title: "Đại Việt Kỳ Nhân", type: "Website", size: "-", source: "Trang sơ đồ lịch sử", link: "https://daivietkynhan.vn/" },
-];
+const pdfsAndLinks = bookFiles.map((fileName) => ({
+  title: fileName.replace(/\.[^/.]+$/, ""),
+  type: "PDF",
+  size: "-",
+  link: encodeURI(`/book/${fileName}`),
+}));
 
 export default function ResourcesPage() {
-  const [_selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [currentImagePage, setCurrentImagePage] = useState(1);
+  const [currentStoryPage, setCurrentStoryPage] = useState(1);
+  const [selectedStory, setSelectedStory] = useState<(typeof folkStories)[number] | null>(null);
+  const [storyContent, setStoryContent] = useState("");
+  const [isStoryLoading, setIsStoryLoading] = useState(false);
+  const [storyError, setStoryError] = useState<string | null>(null);
+
+  const totalImagePages = Math.ceil(imageGallery.length / IMAGES_PER_PAGE);
+  const currentImageItems = imageGallery.slice(
+    (currentImagePage - 1) * IMAGES_PER_PAGE,
+    currentImagePage * IMAGES_PER_PAGE,
+  );
+  const selectedImageData = imageGallery.find((image) => image.id === selectedImage) ?? null;
+  const totalStoryPages = Math.ceil(folkStories.length / STORIES_PER_PAGE);
+  const currentStoryItems = folkStories.slice(
+    (currentStoryPage - 1) * STORIES_PER_PAGE,
+    currentStoryPage * STORIES_PER_PAGE,
+  );
+
+  const handleReadStory = async (story: (typeof folkStories)[number]) => {
+    setSelectedStory(story);
+    setIsStoryLoading(true);
+    setStoryError(null);
+    setStoryContent("");
+
+    try {
+      const storyPath = encodeURI(`/Truyên dân gian, danh nhân/${story.fileName}`);
+      const response = await fetch(storyPath);
+
+      if (!response.ok) {
+        throw new Error("Không thể tải file truyện.");
+      }
+
+      const arrayBuffer = await response.arrayBuffer();
+      const result = await mammoth.extractRawText({ arrayBuffer });
+      const normalizedText = result.value
+        .replace(/\r\n/g, "\n")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
+
+      setStoryContent(normalizedText || "Không có nội dung văn bản để hiển thị.");
+    } catch {
+      setStoryError("Đọc truyện thất bại. Vui lòng thử lại.");
+    } finally {
+      setIsStoryLoading(false);
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -63,7 +148,7 @@ export default function ResourcesPage() {
       </div>
 
       <Tabs defaultValue="images" className="w-full">
-        <TabsList className="grid w-full grid-cols-5 bg-amber-100">
+        <TabsList className="grid w-full grid-cols-4 bg-amber-100">
           <TabsTrigger value="images" className="data-[state=active]:bg-red-600 data-[state=active]:text-white">
             <Image className="w-4 h-4 mr-2" />
             Hình ảnh
@@ -71,10 +156,6 @@ export default function ResourcesPage() {
           <TabsTrigger value="videos" className="data-[state=active]:bg-red-600 data-[state=active]:text-white">
             <Video className="w-4 h-4 mr-2" />
             Video
-          </TabsTrigger>
-          <TabsTrigger value="maps" className="data-[state=active]:bg-red-600 data-[state=active]:text-white">
-            <Map className="w-4 h-4 mr-2" />
-            Bản đồ
           </TabsTrigger>
           <TabsTrigger value="stories" className="data-[state=active]:bg-red-600 data-[state=active]:text-white">
             <BookText className="w-4 h-4 mr-2" />
@@ -89,14 +170,14 @@ export default function ResourcesPage() {
         {/* Images Tab */}
         <TabsContent value="images" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {imageGallery.map((image) => (
+            {currentImageItems.map((image) => (
               <Card 
                 key={image.id} 
                 className="overflow-hidden hover:shadow-xl transition-all cursor-pointer border-2 border-amber-200"
                 onClick={() => setSelectedImage(image.id)}
               >
                 <ImageWithFallback
-                  src={image.src}
+                  src={encodeURI(image.src)}
                   alt={image.title}
                   className="w-full h-48 object-cover"
                 />
@@ -113,6 +194,43 @@ export default function ResourcesPage() {
                 </CardHeader>
               </Card>
             ))}
+          </div>
+
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-gray-600">
+              Trang {currentImagePage}/{totalImagePages} - Hiển thị {currentImageItems.length} ảnh
+            </p>
+
+            <div className="flex items-center gap-2 flex-wrap justify-center">
+              <Button
+                variant="outline"
+                className="border-amber-300"
+                onClick={() => setCurrentImagePage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentImagePage === 1}
+              >
+                Trước
+              </Button>
+
+              {Array.from({ length: totalImagePages }, (_, idx) => idx + 1).map((page) => (
+                <Button
+                  key={page}
+                  variant={currentImagePage === page ? "default" : "outline"}
+                  className={currentImagePage === page ? "bg-red-600 hover:bg-red-700" : "border-amber-300"}
+                  onClick={() => setCurrentImagePage(page)}
+                >
+                  {page}
+                </Button>
+              ))}
+
+              <Button
+                variant="outline"
+                className="border-amber-300"
+                onClick={() => setCurrentImagePage((prev) => Math.min(prev + 1, totalImagePages))}
+                disabled={currentImagePage === totalImagePages}
+              >
+                Sau
+              </Button>
+            </div>
           </div>
         </TabsContent>
 
@@ -151,35 +269,10 @@ export default function ResourcesPage() {
           </p>
         </TabsContent>
 
-        {/* Maps Tab */}
-        <TabsContent value="maps" className="mt-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {historicalMaps.map((map) => (
-              <Card key={map.id} className="border-2 border-amber-200 hover:shadow-lg transition-all">
-                <div className="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center">
-                  <Map className="w-20 h-20 text-red-600 opacity-50" />
-                </div>
-                <CardHeader>
-                  <Badge className="bg-yellow-500 text-red-900 w-fit mb-2">
-                    {map.period}
-                  </Badge>
-                  <CardTitle className="text-lg">{map.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Button variant="outline" className="w-full border-red-300 text-red-700 hover:bg-red-50">
-                    <Download className="w-4 h-4 mr-2" />
-                    Tải xuống
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
-
         {/* Folk Stories Tab */}
         <TabsContent value="stories" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {folkStories.map((story) => (
+            {currentStoryItems.map((story) => (
               <Card key={story.id} className="border-l-4 border-yellow-500 bg-gradient-to-r from-amber-50 to-white hover:shadow-lg transition-all">
                 <CardHeader>
                   <div className="flex items-start gap-3 mb-2">
@@ -201,12 +294,53 @@ export default function ResourcesPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Button variant="outline" className="w-full border-red-300 text-red-700 hover:bg-red-50">
+                  <Button
+                    variant="outline"
+                    className="w-full border-red-300 text-red-700 hover:bg-red-50"
+                    onClick={() => void handleReadStory(story)}
+                  >
                     Đọc truyện
                   </Button>
                 </CardContent>
               </Card>
             ))}
+          </div>
+
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-gray-600">
+              Trang {currentStoryPage}/{totalStoryPages} - Hiển thị {currentStoryItems.length} truyện
+            </p>
+
+            <div className="flex items-center gap-2 flex-wrap justify-center">
+              <Button
+                variant="outline"
+                className="border-amber-300"
+                onClick={() => setCurrentStoryPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentStoryPage === 1}
+              >
+                Trước
+              </Button>
+
+              {Array.from({ length: totalStoryPages }, (_, idx) => idx + 1).map((page) => (
+                <Button
+                  key={page}
+                  variant={currentStoryPage === page ? "default" : "outline"}
+                  className={currentStoryPage === page ? "bg-red-600 hover:bg-red-700" : "border-amber-300"}
+                  onClick={() => setCurrentStoryPage(page)}
+                >
+                  {page}
+                </Button>
+              ))}
+
+              <Button
+                variant="outline"
+                className="border-amber-300"
+                onClick={() => setCurrentStoryPage((prev) => Math.min(prev + 1, totalStoryPages))}
+                disabled={currentStoryPage === totalStoryPages}
+              >
+                Sau
+              </Button>
+            </div>
           </div>
         </TabsContent>
 
@@ -233,7 +367,6 @@ export default function ResourcesPage() {
                           <Badge variant="secondary" className="text-xs">
                             {doc.type}
                           </Badge>
-                          <span>Nguồn: {doc.source}</span>
                           {doc.size !== '-' && <span>📦 {doc.size}</span>}
                         </div>
                       </div>
@@ -277,6 +410,47 @@ export default function ResourcesPage() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      <Dialog open={selectedStory !== null} onOpenChange={(isOpen) => !isOpen && setSelectedStory(null)}>
+        <DialogContent className="max-w-5xl p-4 sm:p-6">
+          {selectedStory && (
+            <>
+
+              <div className="mt-2 max-h-[70vh] overflow-y-auto rounded-lg border border-amber-200 bg-white p-4">
+                {isStoryLoading && <p className="text-sm text-gray-600">Đang tải nội dung truyện...</p>}
+                {!isStoryLoading && storyError && <p className="text-sm text-red-600">{storyError}</p>}
+                {!isStoryLoading && !storyError && (
+                  <p className="whitespace-pre-wrap text-[15px] leading-7 text-gray-800">{storyContent}</p>
+                )}
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={selectedImage !== null} onOpenChange={(isOpen) => !isOpen && setSelectedImage(null)}>
+        <DialogContent className="max-w-4xl p-4 sm:p-6">
+          {selectedImageData && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-xl">{selectedImageData.title}</DialogTitle>
+                <DialogDescription className="flex items-center gap-2 pt-1">
+                  <Badge className="bg-red-600 text-white text-xs">{selectedImageData.category}</Badge>
+                  <Badge variant="secondary" className="text-xs">{selectedImageData.period}</Badge>
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="mt-2 overflow-hidden rounded-lg border border-amber-200 bg-black/5">
+                <ImageWithFallback
+                  src={encodeURI(selectedImageData.src)}
+                  alt={selectedImageData.title}
+                  className="h-[65vh] w-full object-contain"
+                />
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
