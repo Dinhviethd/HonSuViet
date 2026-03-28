@@ -14,7 +14,7 @@ export function LessonContentSection({ introduction, sections, keyPoints }: Less
       {/* Introduction */}
       <Card className="border-2 border-amber-300 bg-amber-50">
         <CardHeader>
-          <CardTitle className="text-red-800">📚 Giới thiệu</CardTitle>
+          <CardTitle className="text-red-800">Giới thiệu</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-gray-700 text-lg leading-relaxed">
