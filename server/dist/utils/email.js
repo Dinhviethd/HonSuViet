@@ -14,7 +14,7 @@ const transporter = nodemailer_1.default.createTransport({
 });
 const sendOTPEmail = async (email, otp) => {
     const mailOptions = {
-        from: `"SGroup Trello" <${process.env.EMAIL_USER}>`,
+        from: `"Hon Su Viet" <${process.env.EMAIL_USER}>`,
         to: email,
         subject: 'Mã xác nhận đặt lại mật khẩu',
         html: `

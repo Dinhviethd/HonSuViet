@@ -3,9 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateMultiple = exports.validate = void 0;
 const zod_1 = require("zod");
 const error_response_1 = require("@/utils/error.response");
-/**
- * Middleware để validate request body, query, params sử dụng Zod schema
- */
 const validate = (schema, source = 'body') => {
     return (req, res, next) => {
         try {

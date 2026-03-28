@@ -55,11 +55,20 @@ export function InternalQuizList({ internalQuizzes }: InternalQuizListProps) {
 								</div>
 							) : null}
 
-							<Link to={`/tests/${quiz.id}`}>
-								<Button className={`w-full ${quiz.completed ? "bg-green-600 hover:bg-green-700" : "bg-red-600 hover:bg-red-700"}`}>
-									{quiz.completed ? "Làm lại" : "Bắt đầu kiểm tra"}
-								</Button>
-							</Link>
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+								<Link to={`/tests/${quiz.id}`}>
+									<Button className={`w-full ${quiz.completed ? "bg-green-600 hover:bg-green-700" : "bg-red-600 hover:bg-red-700"}`}>
+										{quiz.completed ? "Làm lại" : "Bắt đầu kiểm tra"}
+									</Button>
+								</Link>
+								{quiz.completed ? (
+									<Link to={`/tests/${quiz.id}/history`}>
+										<Button variant="outline" className="w-full border-red-300 text-red-700 hover:bg-red-50">
+											Xem lịch sử
+										</Button>
+									</Link>
+								) : null}
+							</div>
 						</CardContent>
 					</Card>
 				))}

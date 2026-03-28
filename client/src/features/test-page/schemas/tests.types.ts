@@ -51,11 +51,23 @@ export interface QuizQuestionWithAnswers {
   answers: ApiAnswer[];
 }
 
+export interface ApiAttemptAnswer {
+  idQuestion: string;
+  idAnswer: string | null;
+}
+
 export interface ApiQuizAttempt {
   idAttempt: string;
-  quiz: { idQuiz: string };
+  quiz: {
+    idQuiz: string;
+    title?: string;
+  };
+  answersData?: ApiAttemptAnswer[];
   scorePercentage: number;
+  correctAnswersCount?: number;
   status: string;
+  startedAt?: string;
+  completedAt?: string | null;
 }
 
 export interface ApiUserQuizStats {

@@ -17,6 +17,7 @@ const HonSuVietLessons = lazy(() => import('@/features/lesson/pages/LessonsPage'
 const HonSuVietLessonDetail = lazy(() => import('@/features/lesson/pages/LessonDetailPage'))
 const HonSuVietTests = lazy(() => import('@/features/test-page/pages/TestsPage'))
 const HonSuVietTestAttempt = lazy(() => import('@/features/test-page/pages/TestAttemptPage'))
+const HonSuVietTestHistory = lazy(() => import('@/features/test-page/pages/TestHistoryPage'))
 const HonSuVietResources = lazy(() => import('@/features/hon-su-viet/pages/ResourcesPage'))
 // const HonSuVietForum = lazy(() => import('@/features/hon-su-viet/pages/ForumPage'))
 const HonSuVietDiscovery = lazy(() => import('@/features/hon-su-viet/pages/DiscoveryPage'))
@@ -45,6 +46,7 @@ const routes = [
                 children: [
                   { path: "lessons/:id", Component: HonSuVietLessonDetail },
                   { path: "tests/:id", Component: HonSuVietTestAttempt },
+                  { path: "tests/:id/history", Component: HonSuVietTestHistory },
                   { path: "profile", Component: ProfilePage },
                   { path: "profile/change-password", Component: ChangePasswordPage },
                 ],

@@ -7,6 +7,7 @@ exports.authService = exports.AuthService = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const user_repository_1 = require("@/modules/auth/repositories/user.repository");
+const auth_schema_1 = require("@/modules/auth/schemas/auth.schema");
 const error_response_1 = require("@/utils/error.response");
 const email_1 = require("@/utils/email");
 const upload_1 = require("@/utils/upload");
@@ -23,12 +24,14 @@ class AuthService {
         }
         const salt = await bcryptjs_1.default.genSalt(10);
         const hashedPassword = await bcryptjs_1.default.hash(password, salt);
+        const randomAvatarUrl = auth_schema_1.PRESET_AVATAR_URLS[Math.floor(Math.random() * auth_schema_1.PRESET_AVATAR_URLS.length)];
         const newUser = await this.userRepo.create({
             name,
             email,
             password: hashedPassword,
             phone,
             emailVerified: false,
+            avatarUrl: randomAvatarUrl,
         });
         const tokens = this.generateTokens(newUser.idUser);
         return {
@@ -116,6 +119,19 @@ class AuthService {
         });
         const updatedUser = await this.userRepo.update(userId, {
             avatarUrl: uploadResult.secure_url,
+        });
+        if (!updatedUser) {
+            throw new error_response_1.AppError(404, 'User không tồn tại');
+        }
+        return this.toUserResponse(updatedUser);
+    }
+    async updatePresetAvatar(userId, avatarUrl) {
+        const user = await this.userRepo.findById(userId);
+        if (!user) {
+            throw new error_response_1.AppError(404, 'User không tồn tại');
+        }
+        const updatedUser = await this.userRepo.update(userId, {
+            avatarUrl,
         });
         if (!updatedUser) {
             throw new error_response_1.AppError(404, 'User không tồn tại');

@@ -106,9 +106,16 @@ export default function TestAttemptPage() {
             <p className="text-gray-700">
               Điểm số: <span className="font-bold text-emerald-700">{scorePercentage}%</span>
             </p>
-            <Link to="/tests">
-              <Button className="mt-3 bg-emerald-600 hover:bg-emerald-700">Quay lại trang kiểm tra</Button>
-            </Link>
+            <div className="flex flex-wrap gap-3 pt-1">
+              <Link to={`/tests/${quiz.idQuiz}/history`}>
+                <Button variant="outline" className="border-emerald-500 text-emerald-700 hover:bg-emerald-100">
+                  Xem lịch sử & đáp án đúng
+                </Button>
+              </Link>
+              <Link to="/tests">
+                <Button className="bg-emerald-600 hover:bg-emerald-700">Quay lại trang kiểm tra</Button>
+              </Link>
+            </div>
           </CardContent>
         </Card>
       ) : null}
