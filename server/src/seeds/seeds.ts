@@ -11,9 +11,9 @@ async function runSeeds() {
     
     console.log('🌱 Running database seeds...');
     
-    await seedRoles();
-    await seedChapters();
-    await seedLessons();
+    // await seedRoles();
+    // await seedChapters();
+    // await seedLessons();
     await seedQuizzes();
     
     console.log('✅ All seeds completed!');

@@ -1,6 +1,5 @@
 export interface QuizPlatform {
   name: string;
-  icon: string;
   color: string;
   description: string;
   features: string[];
@@ -18,7 +17,6 @@ export interface InternalQuiz {
   completed: boolean;
 }
 
-// ─── API response types ───────────────────────────
 export interface ApiQuizWithStats {
   idQuiz: string;
   title: string;

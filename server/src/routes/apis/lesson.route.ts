@@ -7,14 +7,12 @@ import { userNoteController } from '@/modules/lesson/controllers/user-note.contr
 
 const router = Router();
 
-// ─── Chapters ─────────────────────────────────────
 router.get('/chapters', chapterController.getAll);
 router.get('/chapters/:id', chapterController.getById);
 router.post('/chapters', chapterController.create);
 router.put('/chapters/:id', chapterController.update);
 router.delete('/chapters/:id', chapterController.delete);
 
-// ─── Lessons ──────────────────────────────────────
 router.get('/lessons', lessonController.getAll);
 router.get('/lessons/:id', lessonController.getById);
 router.get('/chapters/:chapterId/lessons', lessonController.getByChapter);
@@ -22,14 +20,12 @@ router.post('/lessons', lessonController.create);
 router.put('/lessons/:id', lessonController.update);
 router.delete('/lessons/:id', lessonController.delete);
 
-// ─── Lesson Media ──────────────────────────────────
 router.get('/media/:id', lessonMediaController.getById);
 router.get('/lessons/:lessonId/media', lessonMediaController.getByLesson);
 router.post('/media', lessonMediaController.create);
 router.put('/media/:id', lessonMediaController.update);
 router.delete('/media/:id', lessonMediaController.delete);
 
-// ─── User Lesson Progress ─────────────────────────
 router.get('/progress/:id', userLessonProgressController.getById);
 router.get('/progress/user/:userId', userLessonProgressController.getByUser);
 router.get('/progress/user/:userId/lesson/:lessonId', userLessonProgressController.getByUserAndLesson);
@@ -37,7 +33,6 @@ router.post('/progress', userLessonProgressController.create);
 router.put('/progress/:id', userLessonProgressController.update);
 router.delete('/progress/:id', userLessonProgressController.delete);
 
-// ─── User Notes ───────────────────────────────────
 router.get('/notes/:id', userNoteController.getById);
 router.get('/notes/user/:userId', userNoteController.getByUser);
 router.get('/notes/lesson/:lessonId', userNoteController.getByLesson);

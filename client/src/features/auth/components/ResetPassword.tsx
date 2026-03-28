@@ -47,7 +47,7 @@ export default function ResetPassword() {
     setLoading(true)
 
     try {
-      const response = await authService.forgotPassword({ email })
+      const response = await authService.sendOTP({ email })
       
       if (response.success) {
         toast.success(response.message || "Mã xác thực đã được gửi đến email của bạn")
@@ -100,7 +100,7 @@ export default function ResetPassword() {
     setLoading(true)
 
     try {
-      const response = await authService.forgotPassword({ email })
+      const response = await authService.sendOTP({ email })
       
       if (response.success) {
         toast.success("Mã xác thực mới đã được gửi đến email của bạn")
@@ -162,7 +162,6 @@ export default function ResetPassword() {
         <Card className="border-4 border-yellow-500 bg-gradient-to-br from-red-50 to-amber-50 shadow-xl">
           <CardHeader>
             <CardTitle className="text-2xl font-black text-red-800 flex items-center gap-2">
-              <span className="text-3xl">🐉</span>
               Quên mật khẩu
             </CardTitle>
             <CardDescription className="text-gray-600">
@@ -244,7 +243,6 @@ export default function ResetPassword() {
       <Card className="border-4 border-yellow-500 bg-gradient-to-br from-red-50 to-amber-50 shadow-xl">
         <CardHeader>
           <CardTitle className="text-2xl font-black text-red-800 flex items-center gap-2">
-            <span className="text-3xl">🐉</span>
             Đặt lại mật khẩu
           </CardTitle>
           <CardDescription className="text-gray-600">

@@ -43,7 +43,7 @@ export function QuickAccess() {
         <div className="relative p-8 md:p-12">
           <div className="text-center mb-8">
             <h2 className="text-4xl font-black text-white mb-3 drop-shadow-lg">
-              🔥 Sẵn sàng khám phá? 🔥
+              Sẵn sàng khám phá?
             </h2>
             <p className="text-xl text-yellow-100 font-medium">
               Bắt đầu hành trình học tập lịch sử Việt Nam ngay hôm nay

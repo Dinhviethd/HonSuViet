@@ -19,6 +19,7 @@ const HonSuVietTests = lazy(() => import('@/features/test-page/pages/TestsPage')
 const HonSuVietTestAttempt = lazy(() => import('@/features/test-page/pages/TestAttemptPage'))
 const HonSuVietResources = lazy(() => import('@/features/hon-su-viet/pages/ResourcesPage'))
 // const HonSuVietForum = lazy(() => import('@/features/hon-su-viet/pages/ForumPage'))
+const HonSuVietDiscovery = lazy(() => import('@/features/hon-su-viet/pages/DiscoveryPage'))
 // const HonSuVietDictionary = lazy(() => import('@/features/hon-su-viet/pages/DictionaryPage'))
 // const HonSuVietGames = lazy(() => import('@/features/hon-su-viet/pages/GamesPage'))
 const CommingSoon = lazy(() => import('@/components/shared/CommingSoon'))
@@ -36,7 +37,7 @@ const routes = [
               { path: "lessons", Component: HonSuVietLessons },
               { path: "tests", Component: HonSuVietTests },
               { path: "resources", Component: HonSuVietResources },
-              { path: "forum", Component: CommingSoon },
+              { path: "forum", Component: HonSuVietDiscovery },
               { path: "dictionary", Component: CommingSoon },
               { path: "games", Component: CommingSoon },
               {

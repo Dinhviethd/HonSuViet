@@ -108,12 +108,11 @@ export default function LoginPage() {
             {isLoading ? "Đang đăng nhập..." : "Đăng nhập"}
           </Button>
           <div className="text-center space-y-2">
-            <p className="text-sm text-gray-600">hoặc</p>
             <Link to="/auth/register">
               <Button
                 type="button"
                 variant="outline"
-                className="w-full border-2 border-yellow-500 text-red-700 hover:bg-yellow-50 font-medium"
+                className="w-full border-2 border-yellow-500 text-red-700 hover:bg-yellow-50 font-medium "
               >
                 Đăng ký tài khoản mới
               </Button>

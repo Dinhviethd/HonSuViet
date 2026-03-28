@@ -1,5 +1,20 @@
 import { z } from 'zod';
 
+export const PRESET_AVATAR_URLS = [
+  '/avatar/meo.jpg',
+  '/avatar/ti.jpg',
+  '/avatar/dan.jpg',
+  '/avatar/dau.jpg',
+  '/avatar/hoi.jpg',
+  '/avatar/mui.jpg',
+  '/avatar/ngo.jpg',
+  '/avatar/suu.jpg',
+  '/avatar/than.jpg',
+  '/avatar/thin.jpg',
+  '/avatar/tuat.jpg',
+  '/avatar/ty.jpg',
+] as const;
+
 export const registerSchema = z.object({
   name: z
     .string()
@@ -36,7 +51,7 @@ export const refreshTokenSchema = z.object({
   refreshToken: z.string().min(1, 'Refresh token is required'),
 });
 
-export const forgotPasswordSchema = z.object({
+export const sendOTPSchema = z.object({
   email: z
     .string()
     .email('Email không hợp lệ'),
@@ -97,6 +112,12 @@ export const uploadAvatarSchema = z.object({
   imageBase64: z.string().min(1, 'Ảnh đại diện là bắt buộc'),
 });
 
+export const updatePresetAvatarSchema = z.object({
+  avatarUrl: z.enum(PRESET_AVATAR_URLS, {
+    message: 'Avatar không hợp lệ',
+  }),
+});
+
 export const changePasswordSchema = z.object({
   currentPassword: z.string().min(1, 'Vui lòng nhập mật khẩu hiện tại'),
   newPassword: z
@@ -116,13 +137,15 @@ export const changePasswordSchema = z.object({
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RefreshTokenInput = z.infer<typeof refreshTokenSchema>;
-export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
+export type SendOTPInput = z.infer<typeof sendOTPSchema>;
 export type VerifyOTPInput = z.infer<typeof verifyOTPSchema>;
 export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
 export type CreateUserInput = z.infer<typeof createUserSchema>;
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
 export type UpdateCurrentProfileInput = z.infer<typeof updateCurrentProfileSchema>;
 export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
+export type UpdatePresetAvatarInput = z.infer<typeof updatePresetAvatarSchema>;
+export type PresetAvatarUrl = (typeof PRESET_AVATAR_URLS)[number];
 
 export type UserResponse = {
   idUser: string;

@@ -2,9 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import { ZodSchema, ZodError } from 'zod';
 import { AppError } from '@/utils/error.response';
 
-/**
- * Middleware để validate request body, query, params sử dụng Zod schema
- */
 export const validate = (schema: ZodSchema, source: 'body' | 'query' | 'params' = 'body') => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {

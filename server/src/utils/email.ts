@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
 
 export const sendOTPEmail = async (email: string, otp: string): Promise<void> => {
   const mailOptions = {
-    from: `"SGroup Trello" <${process.env.EMAIL_USER}>`,
+    from: `"Hon Su Viet" <${process.env.EMAIL_USER}>`,
     to: email,
     subject: 'Mã xác nhận đặt lại mật khẩu',
     html: `

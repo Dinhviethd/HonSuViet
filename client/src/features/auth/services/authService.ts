@@ -14,7 +14,7 @@ export interface RegisterRequest {
   phone?: string;
 }
 
-export interface ForgotPasswordRequest {
+export interface SendOTPRequest {
   email: string;
 }
 
@@ -125,13 +125,23 @@ export const authService = {
     return response.data;
   },
 
+  async updatePresetAvatar(avatarUrl: string): Promise<ApiResponse<User>> {
+    const response = await api.put<ApiResponse<User>>('/auth/avatar/preset', { avatarUrl });
+
+    if (response.data.success && response.data.data) {
+      useAuth.getState().setUser(response.data.data);
+    }
+
+    return response.data;
+  },
+
   async changePassword(data: ChangePasswordRequest): Promise<ApiResponse> {
     const response = await api.put<ApiResponse>('/auth/change-password', data);
     return response.data;
   },
 
-  async forgotPassword(data: ForgotPasswordRequest): Promise<ApiResponse> {
-    const response = await api.post<ApiResponse>('/auth/forgot-password', data);
+  async sendOTP(data: SendOTPRequest): Promise<ApiResponse> {
+    const response = await api.post<ApiResponse>('/auth/send-otp', data);
     return response.data;
   },
 
