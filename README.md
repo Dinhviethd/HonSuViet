@@ -3,7 +3,7 @@
 
 **Hồn Sử Việt** là một dự án ứng dụng web giáo dục được thiết kế nhằm mục đích lan tỏa và truyền cảm hứng học tập Lịch sử Việt Nam. Dự án cung cấp các bài học lịch sử, hệ thống trắc nghiệm, các câu chuyện dân gian, giai thoại về danh nhân và kết hợp hệ thống Gamification (trò chơi hóa) để mang lại trải nghiệm học tập sinh động, hấp dẫn.
 
-## ✨ Các tính năng nổi bật (Dự kiến)
+## ✨ Các tính năng nổi bật
 
 * ** Khám phá Lịch sử:** Cung cấp tài liệu, truyện dân gian, danh nhân và tư liệu về các triều đại lịch sử Việt Nam.
 * ** Hệ thống bài học:** Các chương và bài học được sắp xếp khoa học, tích hợp đa phương tiện (video, hình ảnh).
@@ -30,7 +30,7 @@ Dự án được xây dựng theo mô hình Client-Server với các công ngh�
 * **File Upload:** Multer, Cloudinary.
 * **Emailing:** Nodemailer.
 
-## 🚀 Hướng dẫn cài đặt và chạy dự án
+## Hướng dẫn cài đặt và chạy dự án
 
 ### 1. Yêu cầu môi trường
 * Node.js (phiên bản mới nhất được khuyến nghị)
@@ -64,6 +64,7 @@ npm install   # Cài đặt các thư viện UI và React
 ```bash
 npm run dev   # Chạy Vite dev server
 ```
+Hoặc có thể trải nghiệm trực tiếp ở đây: https://app-honsuviet-123191630809.asia-southeast1.run.app/
 
 ### 4. Xây dựng cho môi trường Production
 * **Client:** Chạy lệnh `npm run build` để TypeScript biên dịch và Vite đóng gói source code tĩnh.
